@@ -4,13 +4,17 @@ def php_installed?
     `which php`.length > 0
 end
 
+def php_phar_module_enabled?
+    `php -m`.downcase.include? "phar"
+end
+
 class PhpCsFixer < Formula
   homepage 'http://cs.sensiolabs.org'
   url 'http://cs.sensiolabs.org/get/php-cs-fixer.phar'
-  sha1 'ff73f65e1c21f4f450322b3a4f46ae644bb450ef'
+  sha1 'd8aee46fa5515513bab100635992c85ad08258c7'
   version '0.2'
 
-  depends_on 'php' => :recommended unless php_installed?
+  depends_on 'php53' => :recommended unless php_installed? && php_phar_module_enabled?
 
   def install
     libexec.install "php-cs-fixer.phar"
